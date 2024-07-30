@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shared.Models;
 
 namespace TodoApiUnitTests
 {
@@ -9,7 +10,7 @@ namespace TodoApiUnitTests
         [TestMethod]
         public void IsItemNameValidReturnsFalseWhenItemNameIsEmptyString()
         {
-            TodoApi.Models.TodoItem item = new TodoApi.Models.TodoItem();
+            TodoItem item = new TodoItem();
             item.Name = "";
 
             var result = TodoApi.Utils.IsItemNameValid(item);

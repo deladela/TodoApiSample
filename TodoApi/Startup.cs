@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace TodoApi
 {
@@ -37,9 +38,15 @@ namespace TodoApi
                 c.IncludeXmlComments(xmlPath);
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Todo API", Version = "v1" });
             });
+            services.AddLogging(config =>
+        {
+            config.AddConsole();
+            config.AddDebug();
+            config.SetMinimumLevel(LogLevel.Information);
+        });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILogger<Startup> logger)
         {
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -50,6 +57,7 @@ namespace TodoApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API V1");
             });
             app.UseMvc();
+            logger.LogInformation("Application started.");
         }
     }
 }

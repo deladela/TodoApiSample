@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using Shared.Models;
 using TodoApi.Models;
 
 namespace TodoApi

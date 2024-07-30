@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models;
+using Shared.Models;
+using System;
+using Microsoft.Extensions.Logging;
 
 namespace TodoApi.Controllers
 {
@@ -11,12 +14,14 @@ namespace TodoApi.Controllers
     public class TodoController : ControllerBase
     {
         private readonly TodoContext _context;
+        private readonly ILogger<TodoController> _logger;
 
-        public TodoController(TodoContext context)
+        public TodoController(TodoContext context, ILogger<TodoController> logger)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             //comment this out if you don't want the default todo items populating on launch
-            if (_context.TodoItems.Count() == 0)
+            if (_context.TodoItems != null && !_context.TodoItems.Any())
             {
                 Utils.InsertBaseTodoItems(_context);
             }
@@ -32,11 +37,25 @@ namespace TodoApi.Controllers
         [ProducesResponseType(401)]
         public ActionResult<List<TodoItem>> GetAll()
         {
-            if (!Utils.CanAccess(Request.Headers))
+            _logger.LogInformation("GetAll method called.");
+
+            if (_context.TodoItems == null)
             {
-                return Unauthorized();
+                _logger.LogError("TodoItems is null.");
+                return NotFound();
             }
-            return _context.TodoItems.ToList();
+
+            try
+            {
+                var items = _context.TodoItems.ToList();
+                _logger.LogInformation("Returning {Count} items.", items.Count);
+                return Ok(items);
+            }
+            catch (System.Exception e)
+            {
+                _logger.LogError(e, "An error occurred while retrieving todo items.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         //[HttpGet("limit")]

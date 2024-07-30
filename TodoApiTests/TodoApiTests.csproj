@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
+    <NoWarn>$(NoWarn);1591;CS*;</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 

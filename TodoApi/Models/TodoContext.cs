@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Shared.Models;
 
 namespace TodoApi.Models
 {
@@ -9,6 +10,6 @@ namespace TodoApi.Models
         {
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public virtual DbSet<TodoItem> TodoItems { get; set; }
     }
 }
