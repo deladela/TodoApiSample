@@ -81,6 +81,9 @@ To view some automated tests written in C#, review the folder "Teststrategies/Te
 3. (optional) Execute the following command to start a headless test run:
    ```bash
    npx cypress run
+4. (optional) if there are problems installing Cypress try this command:
+   ```bash
+   npx cypress install --force
 
 # Deutsche Übersetzung
 
@@ -167,3 +170,6 @@ Um einige automatisierte Tests in C# zu sehen, überprüfen Sie den Ordner "Test
 3. (optional) Führen sie den folgenden Befehl aus um einen headless test run zu starten:
    ```bash
    npx cypress run
+4. (optional) Gibt es Probleme beider Installation, versuchen Sie diesen Befehl:
+   ```bash
+   npx cypress install --force
